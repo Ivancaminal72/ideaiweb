@@ -1,0 +1,10 @@
+extends base
+include mixins/ppi
+
+block content
+	- for (var i = 0; i < data.length; ++i) {
+		+ppi(data[i], authors[i], collabs[i])
+		p
+	- }
+	
+

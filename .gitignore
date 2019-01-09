@@ -1,0 +1,7 @@
+**/build/
+**/deps/
+**/bin/
+**/*.user
+**/*.pyc
+/node_modules/
+/public/

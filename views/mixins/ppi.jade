@@ -1,0 +1,19 @@
+mixin ppi(dat, author, collab)
+	.grayLighter-background.align-left
+		img.image-left(height='15%', src='https://ideai.upc.edu/en/shared/pap/#{dat[0]}.png', width='15%')
+		h4.category-subtitle #{dat[5]}
+		p #{author}
+			
+		p #{dat[10]}
+		p #{collab}
+		//-
+			script(type='text/javascript').
+				var renCollabs = "";
+				for (var i = 1; i < data.length; i++) {
+					renCollabs += "#{collab[i]}";
+					if(i != data.length-1) {renCollabs += ' &emsp ';}
+				}
+				if(secAuthors != "") document.write(renCollabs);
+		//
+		
+
