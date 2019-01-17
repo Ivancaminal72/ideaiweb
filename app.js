@@ -13,60 +13,42 @@ app.use("/pub",express.static('public'));
 
 papa.parse(file, {
 	encoding: "utf-8",
-	complete: function(results) {
-		console.log("parseFile:", results.data);
-		parseAuthors(results);
+	header: true,
+	complete: async function(results) {
+		console.log("parseFile_errors:", results.errors);
+		console.log("parseFile_meta:", results.meta);
+		//console.log(results.data)
+		results.data = await parseField(results.data, "Authors", ";");
+		results.data = await parseField(results.data, "PAuthors", ";");
+		results.data = await parseField(results.data, "SAuthors", ";");
+		results.data = await parseField(results.data, "Collaborators", ";");
+		results.data = await parseField(results.data, "SAreas", ",");
+		readyToRender(results);
 		}
 });
 
-function parseAuthors(results){
-	var authors = "";
-	var data = results.data;
+async function parseField(data, field, dl){
 	for (var i = 0; i < data.length; i++) {
-    	authors += data[i][4];
-		if( i != data.length-1) {
-			authors += '\n'
-		}
+		var result = papa.parse(data[i][field], {
+			delimiter: dl,
+			encoding: "utf-8",
+			complete: function(results) {
+				if(results.errors.length != 0){
+					console.log("parse_errors:", results.errors);
+					console.log("parse_meta:", results.meta);
+					}
+				}
+			});
+		data[i][field] = result.data.flat();
 	}
-	console.log("parseAuthors_string:", authors);
-	papa.parse(authors, {
-		delimiter: ";",
-		encoding: "utf-8",
-		complete: function(results_a) {
-			console.log("parseAuthors:", results_a.data);
-			parseCollabs(results, results_a);
-			}
-	});
+	return data;
 }
 
-function parseCollabs(results, results_a){
-	var authors = "";
-	var data = results.data;
-	for (var i = 0; i < data.length; i++) {
-    	authors += data[i][8];
-		if( i != data.length-1) {
-			authors += '\n'
-		}
-	}
-	console.log("parseCollabs_string:", authors);
-	papa.parse(authors, {
-		delimiter: ";",
-		encoding: "utf-8",
-		complete: function(results_c) {
-			console.log("parseCollabs:", results_c.data);
-			readyToRender(results, results_a, results_c);
-			}
-	});
-}
-
-
-function readyToRender(results, results_a, results_c) {
+function readyToRender(results) {
 	// Render frontpage
 	app.get('/', function (req, res) {
 		res.render('portada',{
-			data: results.data,
-			authors: results_a.data,
-			collabs: results_c.data
+			data: results.data
 		});
 	});
 }

@@ -1,19 +1,19 @@
-mixin ppi(dat, author, collab)
+mixin ppi(dat, authors, collabs)
 	.grayLighter-background.align-left
-		img.image-left(height='15%', src='https://ideai.upc.edu/en/shared/pap/#{dat[0]}.png', width='15%')
-		h4.category-subtitle #{dat[5]}
-		p #{author}
+		a.external-link(href=dat.Url, target='_self')
+			img.image-left(height='15%', src='https://ideai.upc.edu/en/shared/pap/#{dat.Id}.png', width='15%', title=dat.Title, alt=dat.Title)
+		h4.category-subtitle #{dat.Title}
+		p
+			em
+				each author in dat.PAuthors
+					u= author
+				each author in dat.SAuthors
+					span= author
 			
-		p #{dat[10]}
-		p #{collab}
-		//-
-			script(type='text/javascript').
-				var renCollabs = "";
-				for (var i = 1; i < data.length; i++) {
-					renCollabs += "#{collab[i]}";
-					if(i != data.length-1) {renCollabs += ' &emsp ';}
-				}
-				if(secAuthors != "") document.write(renCollabs);
-		//
-		
+		p #{dat.Summary}
+		p
+			each collab, idx in dat.Collaborators
+				span= collab
+				if idx != dat.length-1
+					&emsp;
 

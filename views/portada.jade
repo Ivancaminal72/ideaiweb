@@ -2,9 +2,23 @@ extends base
 include mixins/ppi
 
 block content
-	- for (var i = 0; i < data.length; ++i) {
-		+ppi(data[i], authors[i], collabs[i])
-		p
-	- }
+	- var year, areas = ["Digital Society", "Health",  "Education", "Industry 4.0", "Inclusion", "Economy", "Innovation", "Efficient Resources", "Talent"];
+	each area in areas
+		- year = data[0].Year;
+		h1= area
+		h2 projectects and Patents
+		div
+			each project, i in data
+				if project.PArea.includes(area) || project.SAreas.includes(area)
+					if year != project.Year
+						p
+						h3= project.Year
+						p
+						-year = project.Year
+					else
+						pf
+					+ppi(project)
+					p
+		
 	
 
