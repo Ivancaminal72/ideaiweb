@@ -2,14 +2,17 @@ extends base
 include mixins/ppi
 
 block content
-	- var year, areas = ["Digital Society", "Health",  "Education", "Industry 4.0", "Inclusion", "Economy", "Innovation", "Efficient Resources", "Talent"];
+	- var year, areas = ["Digital Society", "Wellness",  "Education", "Industry 4.0", "Economy", "Innovation", "Efficient Resources", "Talent"];
 	each area in areas
 		- year = data[0].Year;
+		- var subareas = [area]
+		if area == "Wellness"
+			- subareas.push("Health", "Inclusion")
 		h1= area
 		h2 projectects and Patents
 		div
 			each project, i in data
-				if project.PArea.includes(area) || project.SAreas.includes(area)
+				if subareas.some(a => project.PArea.includes(a)) || subareas.some(a => project.SAreas.includes(a))
 					if year != project.Year
 						p
 						h3= project.Year
@@ -21,4 +24,3 @@ block content
 					p
 		
 	
-
