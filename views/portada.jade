@@ -2,25 +2,46 @@ extends base
 include mixins/ppi
 
 block content
-	- var year, areas = ["Digital Society", "Wellness",  "Education", "Industry 4.0", "Economy", "Innovation", "Efficient Resources", "Talent"];
-	each area in areas
-		- year = data[0].Year;
-		- var subareas = [area]
-		if area == "Wellness"
-			- subareas.push("Health", "Inclusion")
-		h1= area
-		h2 projectects and Patents
-		div
-			each project, i in data
-				if subareas.some(a => project.PArea.includes(a)) || subareas.some(a => project.SAreas.includes(a))
-					if year != project.Year
+	-var filterByAreas = false
+	if filterByAreas
+		- var areas = ["Digital Society", "Wellness",  "Education", "Industry 4.0", "Economy", "Innovation", "Efficient Resources", "Talent"];
+		each area in areas
+			- var year = data[0].Year;
+			- var subareas = [area]
+			if area == "Wellness"
+				- subareas.push("Health", "Inclusion")
+			h1= area
+			h2 projectects and Patents
+			div
+				each project, i in data
+					if subareas.some(a => project.PArea.includes(a)) || subareas.some(a => project.SAreas.includes(a))
+						if year != project.Year
+							p
+							h3= project.Year
+							p
+							-year = project.Year
+						else
+							pf
+						+ppi(project, '15%')
 						p
-						h3= project.Year
-						p
-						-year = project.Year
-					else
-						pf
-					+ppi(project)
+	else
+		- var year = data[0].Year;
+		each project, i in data
+			if project.Type == "patent"
+				- continue
+			if year != project.Year 
+				//if project.Year < 2014
+				if project.Year < 0
+					break
+				else
 					p
+					h3= project.Year
+					p
+					-year = project.Year
+			else
+				pf
+			+ppi(project, '10%')
+			p
+		
 		
 	

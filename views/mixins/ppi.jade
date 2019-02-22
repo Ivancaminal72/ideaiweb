@@ -1,8 +1,13 @@
-mixin ppi(dat, authors, collabs)
+mixin ppi(dat, percent)
 	.grayLighter-background.align-left
-		a.external-link(href=dat.Url, target='_self')
-			img.image-left(height='15%', src='https://ideai.upc.edu/en/shared/pap/#{dat.Id}.png', width='15%', title=dat.Title, alt=dat.Title)
-		h4.category-subtitle #{dat.Title}
+		if dat.Url != ""
+			a.external-link(href=dat.Url, target='_self')
+				img.image-left(height=percent, src='https://ideai.upc.edu/en/shared/pap/#{dat.Id}.png', width=percent, title=dat.Title, alt=dat.Title)
+			h4.category-subtitle
+				a.external-link(href=dat.Url, target='_self') #{dat.Title}
+		else
+			img.image-left(height=percent, src='https://ideai.upc.edu/en/shared/pap/#{dat.Id}.png', width=percent, title=dat.Title, alt=dat.Title)
+			h4.category-subtitle #{dat.Title}
 		p
 			em
 				each author in dat.PAuthors
@@ -16,4 +21,3 @@ mixin ppi(dat, authors, collabs)
 				span= collab
 				if idx != dat.length-1
 					&emsp;
-
