@@ -1,17 +1,21 @@
       <div class="carousel slide" id="myCarousel" data-interval="3000">
         <div class="carousel-inner">
           <script type="text/javascript" id="myScript">
-            var prefix = "../shared/logos/"
+            var prefix = "/en/shared/logos/";
             var logos = ['mixestat.png', 'anaxomics.png', 'althaia.jpg', 'fub.jpg', 'promax.png', 'generalitat_catalunya.png', 'meditecnologia.png', 'acia.png', 'accio.png', 'lambda_loopers.png', 'ai4eu.png', 'vall_hebron.png', 'mutua_terrassa.png', 'leitat.png', 'fons_eu_desenvolupament_regional.png', 'intelligent_pharma.png', 'pere_virgili.png', 'hospital_granollers.jpeg', 'ithinkupc-alta.png', 'cvh.png', 'eurai.png', 'fede_farma.png'];
-            console.log("number of logos", logos.length)
+            console.log("number of logos", logos.length);
             var cols = 4;
             var carr = parseInt(logos.length/5);
             var scriptTag = document.getElementsByTagName('script');
             scriptTag = scriptTag[scriptTag.length - 1];
-            var parent = scriptTag.parentNode
+            var parent = scriptTag.parentNode;
             for (var i=0; i<carr; i++) {
               var item = document.createElement("div");
-              item.className = "item"
+              if(i==0){
+                item.className = "item active";
+              } else {
+                item.className = "item";
+              }
               var table = document.createElement("table");
               var tbody = document.createElement("tbody");
               var tr = document.createElement("tr");
@@ -22,14 +26,14 @@
                 img.setAttribute("src", prefix+logos[j]);
                 img.setAttribute("alt", "");
                 img.setAttribute("title", "");
-                div.appendChild(img)
-                td.appendChild(div)
-                tr.appendChild(td)
+                div.appendChild(img);
+                td.appendChild(div);
+                tr.appendChild(td);
               }
-              tbody.appendChild(tr)
-              table.appendChild(tbody)
-              item.appendChild(table)
-              parent.appendChild(item)
+              tbody.appendChild(tr);
+              table.appendChild(tbody);
+              item.appendChild(table);
+              parent.appendChild(item);
             }
           </script>
           <!--
@@ -44,11 +48,11 @@
 
       <script type="text/javascript">
                    $(document).ready(function(event) {
-                       intervalid = setInterval(function(event) {
-                           $('.carousel').carousel('cycle')
-                           clearInterval(intervalid)
-                       }, 1)
-                   })
+                       $('.carousel').carousel({
+                       interval: $('.carousel').attr('data-interval'),
+                       ride: true
+                     });
+                   });
 
                    function clearElement(elementID){
                      document.getElementById(elementID).innerHTML = "";
