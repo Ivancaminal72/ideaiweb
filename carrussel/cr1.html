@@ -10,13 +10,12 @@
         <a class="carousel-control right" href="#myCarousel" data-slide="next">›</a>
       </div>
       <p> </p>
-
  <script type="text/javascript" id="myScript">
             var prefix = "/en/shared/logos/";
-            var logos = ['mixestat.png', 'anaxomics.png', 'althaia.jpg', 'fub.jpg', 'promax.png', 'generalitat_catalunya.png', 'meditecnologia.png', 'acia.png', 'accio.png', 'lambda_loopers.png', 'ai4eu.png', 'vall_hebron.png', 'mutua_terrassa.png', 'leitat.png', 'fons_eu_desenvolupament_regional.png', 'intelligent_pharma.png', 'pere_virgili.png', 'hospital_granollers.jpeg', 'ithinkupc-alta.png', 'cvh.png', 'eurai.png', 'fede_farma.png'];
+            var logos = ['mixestat.png', 'anaxomics.png', 'althaia.jpg', 'fub.jpg', 'promax.png', 'generalitat_catalunya.png', 'meditecnologia.png', 'acia.png', 'accio.png', 'lambda_loopers.png', 'ai4eu.png', 'vall_hebron.png', 'mutua_terrassa.png', 'leitat.png', 'fons_eu_desenvolupament_regional.png', 'intelligent_pharma.png', 'pere_virgili.png', 'hospital_granollers.jpeg', 'ithinkupc-alta.png', 'cvh.png', 'eurai.png', 'fede_farma.png', 'upc.png'];
             console.log("number of logos", logos.length);
             var cols = 4;
-            var carr = parseInt(logos.length/5);
+            var carr = parseInt(logos.length/cols+1);
             var caraouselInner = document.querySelector('.carousel-inner');
             for (var i=0; i<carr; i++) {
               var item = document.createElement("div");
@@ -32,7 +31,11 @@
                 var td = document.createElement("td");
                 var div = document.createElement("div");
                 var img = document.createElement("IMG");
-                img.setAttribute("src", prefix+logos[j]);
+				if(j>=logos.length){
+					img.setAttribute("src", prefix+logos[Math.floor(Math.random() * (logos.length - 0))]);
+				}else{
+					img.setAttribute("src", prefix+logos[j]);
+				}
                 img.setAttribute("alt", "");
                 img.setAttribute("title", "");
                 div.appendChild(img);
