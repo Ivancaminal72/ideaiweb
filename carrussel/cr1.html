@@ -12,7 +12,7 @@
       <p> </p>
  <script type="text/javascript" id="myScript">
             var prefix = "/en/shared/logos/";
-            var logos = ['mixestat.png', 'anaxomics.png', 'althaia.jpg', 'fub.jpg', 'promax.png', 'generalitat_catalunya.png', 'meditecnologia.png', 'acia.png', 'accio.png', 'lambda_loopers.png', 'ai4eu.png', 'vall_hebron.png', 'mutua_terrassa.png', 'leitat.png', 'fons_eu_desenvolupament_regional.png', 'intelligent_pharma.png', 'pere_virgili.png', 'hospital_granollers.jpeg', 'ithinkupc-alta.png', 'cvh.png', 'eurai.png', 'fede_farma.png', 'upc.png'];
+            var logos = ['mixestat.png', 'anaxomics.png', 'althaia.jpg', 'fub.jpg', 'promax.png', 'generalitat_catalunya.png', 'meditecnologia.png', 'acia.png', 'accio.png', 'lambda_loopers.png', 'ai4eu.png', 'vall_hebron.png', 'mutua_terrassa.png', 'leitat.png', 'fons_eu_desenvolupament_regional.png', 'intelligent_pharma.png', 'pere_virgili.png', 'hospital_granollers.jpeg', 'ithinkupc-alta.png', 'cvh.png', 'eurai.png', 'upc.png', 'fede_farma.png'];
             console.log("number of logos", logos.length);
             var cols = 4;
             var carr = parseInt(logos.length/cols+1);
@@ -25,21 +25,26 @@
                 item.className = "item";
               }
               var table = document.createElement("table");
+			  table.style.borderCollapse = "separate";
+			  table.style.borderSpacing = "30px 0px";
+			  table.style.tableLayout = "fixed";
               var tbody = document.createElement("tbody");
               var tr = document.createElement("tr");
               for (var j=0+i*cols; j<cols+i*cols; j++) {
                 var td = document.createElement("td");
-                var div = document.createElement("div");
+				td.style.height = "200px";
+				td.setAttribute('align', 'center');
                 var img = document.createElement("IMG");
 				if(j>=logos.length){
 					img.setAttribute("src", prefix+logos[Math.floor(Math.random() * (logos.length - 0))]);
 				}else{
 					img.setAttribute("src", prefix+logos[j]);
 				}
+				img.style.height = "auto";
+				img.style.width = "100%";
                 img.setAttribute("alt", "");
                 img.setAttribute("title", "");
-                div.appendChild(img);
-                td.appendChild(div);
+                td.appendChild(img);
                 tr.appendChild(td);
               }
               tbody.appendChild(tr);
