@@ -36,9 +36,6 @@
 				  var tr = document.createElement("tr");
 				  for (var j=0+i*cols; j<cols+i*cols; j++) {
 					var td = document.createElement("td");
-					//td.style.height = "22vw";
-					//td.style.height = "100%";
-					//td.style.height = "200px";
 					td.style.height = parseInt(screenWidth/cols)+ "px";
 					td.setAttribute('align', 'center');
 					var img = document.createElement("IMG");
@@ -75,16 +72,12 @@
 			}
 			$(window).on("resize", resizeCarrousel);
 			
-		   $(document).ready(function(event) {
+			$(document).ready(function(event) {
 			   $('.carousel').carousel({
 			   interval: $('.carousel').attr('data-interval'),
 			   ride: true
-			 });
-		   });
-
-		   function clearElement(elementID){
-			 document.getElementById(elementID).innerHTML = "";
-		   }
+			   });
+			});
 </script>
 
       <!--
