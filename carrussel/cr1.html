@@ -1,90 +1,90 @@
- 
-  <div class="carousel slide" id="myCarousel" data-interval="5000">
-        <div class="carousel-inner">
-          <!--
-          <div class="item"><img alt="" title="" src="../shared/carrusel/2.png" /></div>
-          <div class="item"><img alt="" title="" src="../shared/carrusel/3.png" /></div>
-          -->
-        </div>
-        <a class="carousel-control left" href="#myCarousel" data-slide="prev">‹</a>
-        <a class="carousel-control right" href="#myCarousel" data-slide="next">›</a>
-      </div>
-      <p> </p>
- <script type="text/javascript" id="myScript">
-            var prefix = "/en/shared/logos/";
-            var logos = ['mixestat.png', 'anaxomics.png', 'althaia.jpg', 'fub.jpg', 'promax.png',  'meditecnologia.png', 'generalitat_catalunya.png', 'acia.png', 'accio.png', 'lambda_loopers.png', 'ai4eu.png', 'vall_hebron.png', 'mutua_terrassa.png', 'leitat.png', 'fons_eu_desenvolupament_regional.png', 'intelligent_pharma.png', 'pere_virgili.png', 'hospital_granollers.jpeg', 'ithinkupc-alta.png', 'cvh.png', 'eurai.png', 'fede_farma.png'];
-            console.log("number of logos", logos.length);
-			var logoWidth = 192;
-			var screenWidth = window.innerWidth;
-            var cols = Math.floor(screenWidth/logoWidth);
-            var carr = parseInt(logos.length/cols+1);
-			
-			function createCarrousel(){
-				var carouselInner = document.querySelector('.carousel-inner');
-				for (var i=0; i<carr; i++) {
-				  var item = document.createElement("div");
-				  if(i==0){
-					item.className = "item active";
-				  } else {
-					item.className = "item";
-				  }
-				  var table = document.createElement("table");
-				  table.style.borderCollapse = "separate";
-				  table.style.borderSpacing = "30px 0px";
-				  table.style.tableLayout = "fixed";
-				  var tbody = document.createElement("tbody");
-				  var tr = document.createElement("tr");
-				  for (var j=0+i*cols; j<cols+i*cols; j++) {
-					var td = document.createElement("td");
-					td.style.height = parseInt(screenWidth/cols)+ "px";
-					td.setAttribute('align', 'center');
-					var img = document.createElement("IMG");
-					if(j>=logos.length){
-						img.setAttribute("src", prefix+logos[Math.floor(Math.random() * (logos.length - 0))]);
-					}else{
-						img.setAttribute("src", prefix+logos[j]);
-					}
-					img.style.height = "auto";
-					img.style.width = "100%";
-					img.style.maxHeight = parseInt(screenWidth/cols)+ "px";
-					img.setAttribute("alt", "");
-					img.setAttribute("title", "");
-					td.appendChild(img);
-					tr.appendChild(td);
-				  }
-				  tbody.appendChild(tr);
-				  table.appendChild(tbody);
-				  item.appendChild(table);
-				  carouselInner.append(item);
-				}
-			}
-			createCarrousel();
-			
-			function resizeCarrousel() {
-				if ( Math.abs($(window).width() - screenWidth) > logoWidth) {
-					screenWidth = $(window).width();
-					carr = parseInt(logos.length/cols+1);
-					cols = parseInt(screenWidth/logoWidth);
-					$('.carousel').carousel("pause").find('.item').remove();
-					createCarrousel();
-					$('.carousel').carousel(0);
-					}
-			}
-			$(window).on("resize", resizeCarrousel);
-			
-			$(document).ready(function(event) {
-			   $('.carousel').carousel({
-			   interval: $('.carousel').attr('data-interval'),
-			   ride: true
-			   });
-			});
+
+<div class="carousel slide" id="myCarousel" data-interval="5000">
+    <div class="carousel-inner">
+        <!--
+        <div class="item"><img alt="" title="" src="../shared/carrusel/2.png" /></div>
+        <div class="item"><img alt="" title="" src="../shared/carrusel/3.png" /></div>
+        -->
+    </div>
+    <a class="carousel-control left" href="#myCarousel" data-slide="prev">‹</a>
+    <a class="carousel-control right" href="#myCarousel" data-slide="next">›</a>
+</div>
+<p> </p>
+<script type="text/javascript" id="myScript">
+    var prefix = "/en/shared/logos/";
+    var logos = ['mixestat.png', 'anaxomics.png', 'althaia.jpg', 'fub.jpg', 'promax.png',  'meditecnologia.png', 'generalitat_catalunya.png', 'acia.png', 'accio.png', 'lambda_loopers.png', 'ai4eu.png', 'vall_hebron.png', 'mutua_terrassa.png', 'leitat.png', 'fons_eu_desenvolupament_regional.png', 'intelligent_pharma.png', 'pere_virgili.png', 'hospital_granollers.jpeg', 'ithinkupc-alta.png', 'cvh.png', 'eurai.png', 'fede_farma.png'];
+    console.log("number of logos", logos.length);
+    var logoWidth = 192;
+    var screenWidth = window.innerWidth;
+    var cols = Math.max(2,Math.floor(screenWidth/logoWidth));
+    var carr = parseInt(logos.length/cols+1);
+
+    function createCarrousel(){
+    	var carouselInner = document.querySelector('.carousel-inner');
+    	for (var i=0; i<carr; i++) {
+            var item = document.createElement("div");
+            if(i==0){
+              item.className = "item active";
+            } else {
+              item.className = "item";
+            }
+            var table = document.createElement("table");
+            table.style.borderCollapse = "separate";
+            table.style.borderSpacing = "30px 0px";
+            table.style.tableLayout = "fixed";
+            var tbody = document.createElement("tbody");
+            var tr = document.createElement("tr");
+            for (var j=0+i*cols; j<cols+i*cols; j++) {
+                var td = document.createElement("td");
+                td.style.height = parseInt(screenWidth/cols)+ "px";
+                td.setAttribute('align', 'center');
+                var img = document.createElement("IMG");
+                if(j>=logos.length){
+                	img.setAttribute("src", prefix+logos[Math.floor(Math.random() * (logos.length - 0))]);
+                }else{
+                	img.setAttribute("src", prefix+logos[j]);
+                }
+                img.style.height = "auto";
+                img.style.width = "100%";
+                img.style.maxHeight = parseInt(screenWidth/cols)+ "px";
+                img.setAttribute("alt", "");
+                img.setAttribute("title", "");
+                td.appendChild(img);
+                tr.appendChild(td);
+            }
+            tbody.appendChild(tr);
+            table.appendChild(tbody);
+            item.appendChild(table);
+            carouselInner.append(item);
+    	}
+    }
+    createCarrousel();
+
+    function resizeCarrousel() {
+    	if ( Math.abs($(window).width() - screenWidth) > logoWidth) {
+    		screenWidth = $(window).width();
+    		carr = parseInt(logos.length/cols+1);
+    		cols = Math.max(2,parseInt(screenWidth/logoWidth));
+    		$('.carousel').carousel("pause").find('.item').remove();
+    		createCarrousel();
+    		$('.carousel').carousel(0);
+    		}
+    }
+    $(window).on("resize", resizeCarrousel);
+
+    $(document).ready(function(event) {
+        $('.carousel').carousel({
+        interval: $('.carousel').attr('data-interval'),
+        ride: true
+        });
+    });
 </script>
 
-      <!--
-      <div class="active item"><img alt="" src="++genweb++static/example-images/car1.jpg" />
-        <div class="carousel-caption">
-          <h4>Títol de la imatge 1</h4>
-          <p>Descripció de la imatge 1.</p>
-        </div>
-      </div>
-      -->
+<!--
+<div class="active item"><img alt="" src="++genweb++static/example-images/car1.jpg" />
+    <div class="carousel-caption">
+        <h4>Títol de la imatge 1</h4>
+        <p>Descripció de la imatge 1.</p>
+    </div>
+</div>
+-->
