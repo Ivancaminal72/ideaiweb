@@ -57,6 +57,12 @@ def parse_bibtex(path, type):
         except KeyError:
             pass
 
+        try:
+            row["Summary"] = fields["abstract"]
+
+        except KeyError:
+            pass
+
         data.append(row)
 
     return data
@@ -66,10 +72,10 @@ def merge_form_information(d_bib, path):
     d_form = pd.read_csv(path, index_col=0)
     final_data = []
     for p_bib in d_bib:
-
+        merging = False
         # print("Loading project", p_bib["Key"], "...")
 
-        #Initialize fields
+        #Initialize fields (to export with custom order)
         final_proj = dict()
         final_proj["Id"] = ""
         final_proj["Year"] = ""
@@ -104,42 +110,57 @@ def merge_form_information(d_bib, path):
 
         try:
             final_proj["Id"] = d_form.at[int(p_bib["Key"]), "Id"]
+            merging = True
         except KeyError as ex:
             final_proj["Id"] = ""
             print("Ignore", ex.args[0])
-            continue
-
-        print("Merging "+ str(p_bib["Key"]))
-
-        PAuthors = ""
-        Authors = ""
-        Title = ""
-        PArea = ""
-
-        try:
-            PAuthors = str(d_form.at[int(p_bib["Key"]), "PAuthors"])
-            Authors = str(d_form.at[int(p_bib["Key"]), "Authors"])
-            Title = str(d_form.at[int(p_bib["Key"]), "Title"])
-            PArea = str(d_form.at[int(p_bib["Key"]), "PArea"])
-
-        except KeyError as ex:
-            warnings.warn("Missing basic additional form field: " + ex.args[0] + " --> " + str(p_bib["Key"]))
             pass
 
-        if PAuthors != "":
-            try:
-                if str(p_bib["PAuthors"]).replace(" ", "") != PAuthors.replace(" ", ""):
-                    final_proj["PAuthors"] = PAuthors
-                else:
-                    final_proj["PAuthors"] = p_bib["PAuthors"]
-                if str(p_bib["Authors"]).replace(" ", "") != Authors.replace(" ", ""):
-                    final_proj["Authors"] = Authors
-                    warnings.warn("Different Authors --> "+str(p_bib["Key"]))
-                else:
-                    final_proj["Authors"] = p_bib["Authors"]
-            except KeyError as ex:
-                warnings.warn("Missing basic field: " + ex.args[0]+" --> "+str(p_bib["Key"]))
-                continue
+
+
+
+        if merging: print("Merging "+ str(p_bib["Key"])) ##########MERGING##########
+
+
+        try:
+            final_proj["PAuthors"] = p_bib["PAuthors"]
+        except KeyError:
+            pass
+
+        try:
+            final_proj["PAuthors"] = str(d_form.at[int(p_bib["Key"]), "PAuthors"])
+        except KeyError:
+            pass
+
+        try:
+            final_proj["Authors"] = p_bib["Authors"]
+        except KeyError:
+            pass
+
+        try:
+            final_proj["Authors"] = str(d_form.at[int(p_bib["Key"]), "Authors"])
+        except KeyError:
+            pass
+
+        try:
+            final_proj["Title"] = p_bib["Title"]
+        except KeyError:
+            pass
+
+        try:
+            final_proj["Title"] = str(d_form.at[int(p_bib["Key"]), "Title"])
+        except KeyError:
+            pass
+
+        try:
+            final_proj["PArea"] = p_bib["PArea"]
+        except KeyError:
+            pass
+
+        try:
+            final_proj["PArea"] = str(d_form.at[int(p_bib["Key"]), "PArea"])
+        except KeyError:
+            pass
 
         try:
             final_proj["SAuthors"] = p_bib["SAuthors"]
@@ -150,24 +171,6 @@ def merge_form_information(d_bib, path):
             final_proj["SAuthors"] = str(d_form.at[int(p_bib["Key"]), "SAuthors"])
         except KeyError:
             pass
-
-        if Title != "":
-            try:
-                if str(p_bib["Title"]).replace(" ", "") != Title.replace(" ", ""):
-                    final_proj["Title"] = Title
-                else:
-                    final_proj["Title"] = p_bib["Title"]
-            except KeyError as ex:
-                warnings.warn("Missing basic field: " + ex.args[0]+" --> "+str(p_bib["Key"]))
-                continue
-
-        if PArea != "":
-            final_proj["PArea"] = PArea
-        else:
-            try:
-                final_proj["PArea"] = p_bib["PArea"]
-            except KeyError:
-                pass
 
         try:
             final_proj["SAreas"] = p_bib["SAreas"]
@@ -222,10 +225,10 @@ def export_data_csv(final_data, out_path):
 
 if __name__ == "__main__":
 
-    path_non_competitive = "C:/Users/Ivan/OneDrive/1-Work/2-ideai/databases/Projects_v2/originals/2019-06-07_NoCompetitius.bib"
-    path_competitive = "C:/Users/Ivan/OneDrive/1-Work/2-ideai/databases/Projects_v2/originals/2019-06-07_Competitius.bib"
+    path_non_competitive = "C:/Users/Ivan/OneDrive/1-Work/2-ideai/databases/Projects_v2/originals/NoCompetitius.bib"
+    path_competitive = "C:/Users/Ivan/OneDrive/1-Work/2-ideai/databases/Projects_v2/originals/Competitius.bib"
     path_form = "C:/Users/Ivan/OneDrive/1-Work/2-ideai/databases/Projects_v2/form.csv"
-    path_out = "C:/Users/Ivan/OneDrive/1-Work/2-ideai/databases/Projects_v2/PAP.csv"
+    path_out = "C:/Users/Ivan/OneDrive/1-Work/2-ideai/databases/Projects_v2/PAP_all.csv"
 
     data_nc = parse_bibtex(path_non_competitive, "non-competitive")
     data_c  = parse_bibtex(path_competitive, "competitive")
