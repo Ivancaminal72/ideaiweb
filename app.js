@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 const fs = require('fs');
 var papa = require('papaparse');
-const file = fs.createReadStream('/home/ideaidades/databases/PRP.csv', {encoding: "utf8"});
+const file = fs.createReadStream('./public/PRP.csv', {encoding: "utf8"});
 
 // Configure jade to be our rendering engine
 app.set('view engine', 'jade');
@@ -39,7 +39,7 @@ async function parseField(data, field, dl){
 					}
 				}
 			});
-		data[i][field] = result.data.flat();
+		data[i][field] = [].concat.apply([], result.data);
 	}
 	return data;
 }
