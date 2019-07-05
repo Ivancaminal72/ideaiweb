@@ -6,6 +6,7 @@ from pybtex.database.input import bibtex
 import pandas as pd
 import codecs
 
+vervose = False
 month_dict = {"Jan": 1, "Feb": 2, "Mar": 3, "Apr": 4, "May": 5, "Jun": 6, "Jul": 7, "Aug": 8, "Sep": 9, "Oct": 10, "Nov": 11, "Dec": 12}
 
 def parse_bibtex(path, type):
@@ -113,13 +114,13 @@ def merge_form_information(d_bib, path):
             merging = True
         except KeyError as ex:
             final_proj["Id"] = ""
-            print("Ignore", ex.args[0])
+            if vervose: print("Ignore", ex.args[0])
             pass
 
 
 
 
-        if merging: print("Merging "+ str(p_bib["Key"])) ##########MERGING##########
+        if merging and vervose: print("Merging "+ str(p_bib["Key"])) ##########MERGING##########
 
 
         try:
@@ -225,10 +226,15 @@ def export_data_csv(final_data, out_path):
 
 if __name__ == "__main__":
 
-    path_non_competitive = "C:/Users/Ivan/OneDrive/1-Work/2-ideai/databases/Projects_v2/originals/NoCompetitius.bib"
-    path_competitive = "C:/Users/Ivan/OneDrive/1-Work/2-ideai/databases/Projects_v2/originals/Competitius.bib"
-    path_form = "C:/Users/Ivan/OneDrive/1-Work/2-ideai/databases/Projects_v2/form.csv"
-    path_out = "C:/Users/Ivan/OneDrive/1-Work/2-ideai/databases/Projects_v2/PAP_all.csv"
+    # path_non_competitive = "C:/Users/Ivan/OneDrive/1-Work/2-ideai/databases/Projects_v2/originals/NoCompetitius.bib"
+    # path_competitive = "C:/Users/Ivan/OneDrive/1-Work/2-ideai/databases/Projects_v2/originals/Competitius.bib"
+    # path_form = "C:/Users/Ivan/OneDrive/1-Work/2-ideai/databases/Projects_v2/form.csv"
+    # path_out = "C:/Users/Ivan/OneDrive/1-Work/2-ideai/databases/Projects_v2/PAP_all.csv"
+
+    path_non_competitive = "./csv/non-competitive.bib"
+    path_competitive = "./csv/competitive.bib"
+    path_form = "./csv/form.csv"
+    path_out = "./csv/PAP_all_summary.csv"
 
     data_nc = parse_bibtex(path_non_competitive, "non-competitive")
     data_c  = parse_bibtex(path_competitive, "competitive")
@@ -243,6 +249,3 @@ if __name__ == "__main__":
     # df.to_csv(path_out)
 
     export_data_csv(data, path_out)
-
-
-
