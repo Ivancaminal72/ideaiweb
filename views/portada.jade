@@ -26,7 +26,8 @@ block content
 						p
 	else
 		- var year = data[0].Year;
-		each project, i in data
+		each project, idx in data
+			- var imgID = "img"+idx.toString();
 			if project.Type == "patent"
 				- continue
 			if year != project.Year 
@@ -40,7 +41,7 @@ block content
 					-year = project.Year
 			else
 				pf
-			+ppi(project, '10%')
+			+ppi(project, '10%', imgID)
 			p
 		
 		

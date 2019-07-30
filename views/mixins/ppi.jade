@@ -1,12 +1,19 @@
-mixin ppi(dat, percent)
+mixin ppi(dat, percent, imgID)
 	.grayLighter-background.align-left
+		
+		script.
+			function handleMissingImage(id) {
+				var image = document.getElementById(id);
+				image.src = "https://ideai.upc.edu/en/shared/pap/default.png"
+			}
+		
 		if dat.Url != ""
 			a.external-link(href=dat.Url, target='_self')
-				img.image-left(height=percent, src='https://ideai.upc.edu/en/shared/pap/#{dat.Id}.png', width=percent, title=dat.Title, alt=dat.Title)
+				img.image-left(id=imgID, onerror="handleMissingImage(this.id);", height=percent, src='https://ideai.upc.edu/en/shared/pap/#{dat.Id}.png', width=percent, title=dat.Title, alt=dat.Title)
 			h4.category-subtitle
 				a.external-link(href=dat.Url, target='_self') #{dat.Title}
 		else
-			img.image-left(height=percent, src='https://ideai.upc.edu/en/shared/pap/#{dat.Id}.png', width=percent, title=dat.Title, alt=dat.Title)
+			img.image-left(id=imgID, onerror="handleMissingImage(this.id);", height=percent, src='https://ideai.upc.edu/en/shared/pap/#{dat.Id}.png', width=percent, title=dat.Title, alt=dat.Title)
 			h4.category-subtitle #{dat.Title}
 		p
 			em

@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 const fs = require('fs');
 var papa = require('papaparse');
-const file = fs.createReadStream('./csv/PRP.csv', {encoding: "utf8"});
+const file = fs.createReadStream('./csv/PAP_all_summary.csv', {encoding: "utf8"});
 
 // Configure jade to be our rendering engine
 app.set('view engine', 'jade');
