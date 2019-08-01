@@ -4,6 +4,7 @@ import csv
 import warnings
 from pybtex.database.input import bibtex
 import pandas as pd
+import numpy as np
 import codecs
 
 vervose = False
@@ -71,6 +72,7 @@ def parse_bibtex(path, type):
 
 def merge_form_information(d_bib, path):
     d_form = pd.read_csv(path, index_col=0)
+    d_form = d_form.replace(np.nan, '', regex=True)
     final_data = []
     for p_bib in d_bib:
         merging = False
