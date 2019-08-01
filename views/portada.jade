@@ -27,7 +27,7 @@ block content
 	else
 		- var year = data[0].Year;
 		each project, idx in data
-			- var imgID = "img"+idx.toString();
+			- var imgID = idx.toString();
 			if project.Type == "patent"
 				- continue
 			if year != project.Year 

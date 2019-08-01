@@ -1,4 +1,4 @@
-mixin ppi(dat, percent, imgID)
+mixin ppi(dat, percent, ppID)
 	.grayLighter-background.align-left
 		
 		script.
@@ -9,16 +9,17 @@ mixin ppi(dat, percent, imgID)
 		
 		if dat.Url != ""
 			a.external-link(href=dat.Url, target='_self')
-				img.image-left(id=imgID, onerror="handleMissingImage(this.id);", height=percent, src='https://ideai.upc.edu/en/shared/pap/#{dat.Id}.png', width=percent, title=dat.Title, alt=dat.Title)
+				img.image-left(id="img"+ppID, onerror="handleMissingImage(this.id);", height=percent, src='https://ideai.upc.edu/en/shared/pap/#{dat.Id}.png', width=percent, title=dat.Title, alt=dat.Title)
 			h4.category-subtitle
 				a.external-link(href=dat.Url, target='_self') #{dat.Title}
 		else
-			img.image-left(id=imgID, onerror="handleMissingImage(this.id);", height=percent, src='https://ideai.upc.edu/en/shared/pap/#{dat.Id}.png', width=percent, title=dat.Title, alt=dat.Title)
+			img.image-left(id="img"+ppID, onerror="handleMissingImage(this.id);", height=percent, src='https://ideai.upc.edu/en/shared/pap/#{dat.Id}.png', width=percent, title=dat.Title, alt=dat.Title)
 			h4.category-subtitle #{dat.Title}
 		p
 			em
 				each author in dat.PAuthors
-					u= author
+					u= author 
+					|&ensp;
 				each author in dat.SAuthors
 					span= author
 			
@@ -26,5 +27,9 @@ mixin ppi(dat, percent, imgID)
 		p
 			each collab, idx in dat.Collaborators
 				span= collab
-				if idx != dat.length-1
-					&emsp;
+				if idx != dat.Collaborators.length-1
+					|&emsp;
+		p #{dat.PArea}
+		if (dat.EndYear - (new Date().getFullYear())) >= 0
+			p Alive
+				
