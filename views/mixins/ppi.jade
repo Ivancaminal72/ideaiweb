@@ -1,12 +1,6 @@
 mixin ppi(dat, percent, ppID)
 	.grayLighter-background.align-left
 		
-		script.
-			function handleMissingImage(id) {
-				var image = document.getElementById(id);
-				image.src = "https://ideai.upc.edu/en/shared/pap/default.png"
-			}
-		
 		if dat.Url != ""
 			a.external-link(href=dat.Url, target='_self')
 				img.image-left(id="img"+ppID, onerror="handleMissingImage(this.id);", height=percent, src='https://ideai.upc.edu/en/shared/pap/#{dat.Id}.png', width=percent, title=dat.Title, alt=dat.Title)
@@ -22,14 +16,35 @@ mixin ppi(dat, percent, ppID)
 					|&ensp;
 				each author in dat.SAuthors
 					span= author
-			
-		p #{dat.Summary}
-		p
-			each collab, idx in dat.Collaborators
-				span= collab
-				if idx != dat.Collaborators.length-1
-					|&emsp;
-		p #{dat.PArea}
-		if (dat.EndYear - (new Date().getFullYear())) >= 0
-			p Alive
+		
+		if dat.Summary.length > 240
+			- var small_summary = dat.Summary.substring(0,240) + "... "
+			p(id="summary"+ppID) #{small_summary}
+				//- button(id=ppID, onclick="showMore(this.id);") [more]
+				a(id=ppID, title="Show more", href="#", onclick="showMore(this.id);return false;") [more]
+			p(id="fullsummary"+ppID, hidden) #{dat.Summary}
+		else
+			p(id="fullsummary"+ppID, hidden) #{dat.Summary}
+		each collab, idx in dat.Collaborators
+			span= collab
+			if idx != dat.Collaborators.length-1
+				|&emsp;
+		p 
+			a(href= ) #{dat.PArea}
+			if dat.PArea != ""
+				|&emsp;
+			if (dat.EndYear - (new Date().getFullYear())) >= 0
+				|Alive
+				
+		script.
+			function handleMissingImage(id) {
+				var image = document.getElementById(id);
+				image.src = "https://ideai.upc.edu/en/shared/pap/default.png"
+			}
+			function showMore(id, summary) {
+				var summary = document.getElementById("summary"+id)
+				var full_summary = document.getElementById("fullsummary"+id)
+				summary.hidden = true;
+				full_summary.hidden = false;
+			}
 				

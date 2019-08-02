@@ -3,8 +3,9 @@ include mixins/ppi
 
 block content
 	-var filterByAreas = false
+	- var areas = ["Digital Society", "Wellness",  "Education", "Industry 4.0", "Economy", "Innovation", "Efficient Resources", "Talent"];
+	- var names_areas_url = ["digital", "health-inclusion-wellness", "education", "industry", "economy", "innovation", "resources", "ethics", "talent"];
 	if filterByAreas
-		- var areas = ["Digital Society", "Wellness",  "Education", "Industry 4.0", "Economy", "Innovation", "Efficient Resources", "Talent"];
 		each area in areas
 			- var year = data[0].Year;
 			- var subareas = [area]
@@ -27,6 +28,9 @@ block content
 	else
 		- var year = data[0].Year;
 		each project, idx in data
+			//- if project.PArea == ""
+			//- 	- var area_url = "https://ideai.upc.edu/en/areas/" + areaMaching(project.Parea)
+			//- 	- continue
 			- var imgID = idx.toString();
 			if project.Type == "patent"
 				- continue
