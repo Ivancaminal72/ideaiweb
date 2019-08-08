@@ -5,6 +5,6 @@
 **/*.pyc
 /node_modules/
 /public/
-/csv/
+**/csv/
 .idea/*
 copy_*.sh

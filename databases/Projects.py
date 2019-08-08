@@ -54,6 +54,15 @@ def parse_bibtex(path, type):
             pass
 
         try:
+            keywords = fields["keywords"].split(";")
+            row["PArea"] = keywords[0]
+            if len(keywords) > 1:
+                row["SAreas"] = keywords[1:]
+
+        except KeyError:
+            pass
+
+        try:
             row["Url"] = fields["url"]
 
         except KeyError:
