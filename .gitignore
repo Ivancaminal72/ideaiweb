@@ -4,7 +4,6 @@
 **/*.user
 **/*.pyc
 /node_modules/
-/public/
 **/csv/
 .idea/*
 copy_*.sh

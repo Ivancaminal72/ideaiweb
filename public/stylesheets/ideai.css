@@ -1,0 +1,18 @@
+.imgBottomPPI {
+  float: right;
+  vertical-align: middle;
+  max-height: 25px;
+}
+
+.divBottomPPI {
+  height: 25px;      /* equals max image height */
+  width: 100%;
+  /* border: 1px solid red; */
+  white-space: nowrap;
+  text-align: center;
+}
+
+.inlineDiv{
+  display: inline-block;
+  width: 100%;
+}
