@@ -1,5 +1,5 @@
-mixin ppi(dat, percent, ppID)
-	.grayLighter-background.align-left
+mixin ppi(dat, percent, ppID, areaRoute)
+	div.grayLighter-background.align-left.inlineDiv
 		
 		if dat.Url != ""
 			a.external-link(href=dat.Url, target='_self')
@@ -20,31 +20,25 @@ mixin ppi(dat, percent, ppID)
 		if dat.Summary.length > 240
 			- var small_summary = dat.Summary.substring(0,240) + "... "
 			p(id="summary"+ppID) #{small_summary}
-				//- button(id=ppID, onclick="showMore(this.id);") [more]
-				a(id=ppID, title="Show more", href="#", onclick="showMore(this.id);return false;") [more]
+				a(id=ppID, title="Show more", href="#", onclick="showMoreSummary(this.id);return false;") [show more]
 			p(id="fullsummary"+ppID, hidden) #{dat.Summary}
+				a(id=ppID, title="Show less", href="#", onclick="showLessSummary(this.id);return false;") [show less]
 		else
-			p(id="fullsummary"+ppID, hidden) #{dat.Summary}
-		each collab, idx in dat.Collaborators
-			span= collab
-			if idx != dat.Collaborators.length-1
-				|&emsp;
-		p 
-			a(href= ) #{dat.PArea}
-			if dat.PArea != ""
-				|&emsp;
+			p(id="fullsummary"+ppID) #{dat.Summary}
+		
+		p
+			each collab, idx in dat.Collaborators
+				span= collab
+				if idx < dat.Collaborators.length-1
+					|&emsp;
+					
+		div.divBottomPPI
+			- var areaUrl = "https://ideai.upc.edu/en/areas/"+areaRoute		
 			if (dat.EndYear - (new Date().getFullYear())) >= 0
-				|Alive
-				
-		script.
-			function handleMissingImage(id) {
-				var image = document.getElementById(id);
-				image.src = "https://ideai.upc.edu/en/shared/pap/default.png"
-			}
-			function showMore(id, summary) {
-				var summary = document.getElementById("summary"+id)
-				var full_summary = document.getElementById("fullsummary"+id)
-				summary.hidden = true;
-				full_summary.hidden = false;
-			}
+				img.imgBottomPPI(alt="Alive", height="25px", src="https://ideai.upc.edu/en/shared/pap/areas_icons/alive.png", title="Alive")
+			else
+				img.imgBottomPPI(alt="Finished", height="25px", src="https://ideai.upc.edu/en/shared/pap/areas_icons/finished.png", title="Finished")
+			a.external-link(href=areaUrl, target="_self")
+				img.imgBottomPPI(alt=areaRoute,height="25px", src="https://ideai.upc.edu/en/shared/pap/areas_icons/"+areaRoute+".png", title=areaRoute)
+			
 				

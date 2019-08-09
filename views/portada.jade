@@ -2,9 +2,9 @@ extends base
 include mixins/ppi
 
 block content
-	-var filterByAreas = false
+	- var filterByAreas = false
 	- var areas = ["Digital Society", "Wellness",  "Education", "Industry 4.0", "Economy", "Innovation", "Efficient Resources", "Talent"];
-	- var names_areas_url = ["digital", "health-inclusion-wellness", "education", "industry", "economy", "innovation", "resources", "ethics", "talent"];
+	- var areaRoutes = ["digital", "health-inclusion-wellness", "education", "industry", "economy", "innovation", "resources", "ethics", "talent"];
 	if filterByAreas
 		each area in areas
 			- var year = data[0].Year;
@@ -15,7 +15,7 @@ block content
 			h2 projectects and Patents
 			div
 				each project, i in data
-					if subareas.some(a => project.PArea.includes(a)) || subareas.some(a => project.SAreas.includes(a))
+					if subareas.some(s => project.PArea.includes(s)) || subareas.some(s => project.SAreas.includes(s))
 						if year != project.Year
 							p
 							h3= project.Year
@@ -28,9 +28,21 @@ block content
 	else
 		- var year = data[0].Year;
 		each project, idx in data
-			//- if project.PArea == ""
-			//- 	- var area_url = "https://ideai.upc.edu/en/areas/" + areaMaching(project.Parea)
-			//- 	- continue
+			- var areaRoute = ""
+			if project.PArea != ""
+				each area, areaIdx in areas
+					- var subareas = [area]
+					if area == "Wellness"
+						- subareas.push("Health", "Inclusion", "Health, Wellness & Inclusion")
+					- var PareaInsens = project.PArea.toLowerCase().replace(/\s+/g, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+					- var subareasInsens = subareas.map(s => s.toLowerCase().replace(/\s+/g, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "")) 
+					if subareasInsens.some(s => PareaInsens.includes(s))
+						- areaRoute = areaRoutes[areaIdx]
+						//- - console.log("Match! ", PareaInsens," ", subareasInsens, " ", areaRoute)
+						- break
+				//- - console.log("Not match.... ", PareaInsens)
+			else
+				- continue
 			- var imgID = idx.toString();
 			if project.Type == "patent"
 				- continue
@@ -45,8 +57,9 @@ block content
 					-year = project.Year
 			else
 				pf
-			+ppi(project, '10%', imgID)
+			+ppi(project, '10%', imgID, areaRoute)
 			p
+		
 		
 		
 	
