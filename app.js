@@ -4,8 +4,8 @@ const fs = require('fs');
 var papa = require('papaparse');
 const file = fs.createReadStream('./databases/csv/PAP_all_summary.csv', {encoding: "utf8"});
 
-// Configure jade to be our rendering engine
-app.set('view engine', 'jade');
+// Configure pug to be our rendering engine
+app.set('view engine', 'pug');
 app.set('views', __dirname + '/views');
 
 // Our CSS and JS files
