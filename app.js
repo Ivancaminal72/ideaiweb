@@ -45,10 +45,40 @@ async function parseField(data, field, dl){
 }
 
 function readyToRender(results) {
-	// Render frontpage
-	app.get('/', function (req, res) {
+	var areas = ["Digital Society", "Wellness",  "Education", "Industry 4.0", "Economy", "Innovation", "Efficient Resources", "ethics", "Talent"];
+	var areaRoutes = ["digital", "health-inclusion-wellness", "education", "industry", "economy", "innovation", "resources", "ethics", "talent"];
+
+	app.get('/areas/:area', function (req, res) {
+		var areaReq = req.params["area"];
+		if(areaRoutes.includes(areaReq)) {
+			var idx = areaRoutes.indexOf(areaReq);
+			var areaReqTitle = areas[idx];
+			var request = "area"
+
+			// Render areas
+			res.render('portada',{
+				request,
+				data: results.data,
+				areas,
+				areaRoutes,
+				areaReq,
+				areaReqTitle
+				});
+		}
+		else {
+
+		}
+	});
+
+	app.get('/projects', function (req, res) {
+		var request = "projects"
+
+		// Render projects
 		res.render('portada',{
-			data: results.data
+			request,
+			data: results.data,
+			areas,
+			areaRoutes
 		});
 	});
 }

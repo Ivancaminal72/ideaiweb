@@ -1,21 +1,22 @@
 extends base
-include mixins/ppi
+include mixins/ppi 
+include mixins/ppiFilteredByArea
 
 block content
-	- var filterByAreas = false
-	- var areas = ["Digital Society", "Wellness",  "Education", "Industry 4.0", "Economy", "Innovation", "Efficient Resources", "Talent"];
-	- var areaRoutes = ["digital", "health-inclusion-wellness", "education", "industry", "economy", "innovation", "resources", "ethics", "talent"];
-	if filterByAreas
-		each area in areas
+	- var imgDim = "10%"
+	case request
+		when "area"
 			- var year = data[0].Year;
-			- var subareas = [area]
-			if area == "Wellness"
-				- subareas.push("Health", "Inclusion")
-			h1= area
-			h2 projectects and Patents
+			- var subareas = [areaReqTitle]
+			- var idx = -1
+			if areaReqTitle == "Wellness"
+				- subareas.push("Health", "Inclusion", "Health, Wellness & Inclusion")
+			h2 Projectects and Patents
 			div
 				each project, i in data
 					if subareas.some(s => project.PArea.includes(s)) || subareas.some(s => project.SAreas.includes(s))
+						- idx ++;
+						- var imgID = idx.toString();
 						if year != project.Year
 							p
 							h3= project.Year
@@ -23,42 +24,44 @@ block content
 							-year = project.Year
 						else
 							pf
-						+ppi(project, '15%')
+						+ppiFilteredByArea(project, imgDim, imgID)
 						p
-	else
-		- var year = data[0].Year;
-		each project, idx in data
-			- var areaRoute = ""
-			if project.PArea != ""
-				each area, areaIdx in areas
-					- var subareas = [area]
-					if area == "Wellness"
-						- subareas.push("Health", "Inclusion", "Health, Wellness & Inclusion")
-					- var PareaInsens = project.PArea.toLowerCase().replace(/\s+/g, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-					- var subareasInsens = subareas.map(s => s.toLowerCase().replace(/\s+/g, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "")) 
-					if subareasInsens.some(s => PareaInsens.includes(s))
-						- areaRoute = areaRoutes[areaIdx]
-						//- - console.log("Match! ", PareaInsens," ", subareasInsens, " ", areaRoute)
-						- break
-				//- - console.log("Not match.... ", PareaInsens)
-			else
-				- continue
-			- var imgID = idx.toString();
-			if project.Type == "patent"
-				- continue
-			if year != project.Year 
-				//if project.Year < 2014
-				if project.Year < 0
-					break
+	
+		when "projects"
+			- var year = data[0].Year;
+			each project, idx in data
+				- var areaRoute = ""
+				if project.PArea != ""
+					each area, areaIdx in areas
+						- var subareas = [area]
+						if area == "Wellness"
+							- subareas.push("Health", "Inclusion", "Health, Wellness & Inclusion")
+						- var PareaInsens = project.PArea.toLowerCase().replace(/\s+/g, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+						- var subareasInsens = subareas.map(s => s.toLowerCase().replace(/\s+/g, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "")) 
+						if subareasInsens.some(s => PareaInsens.includes(s))
+							- areaRoute = areaRoutes[areaIdx]
+							//- - console.log("Match! ", PareaInsens," ", subareasInsens, " ", areaRoute)
+							- break
+					//- - console.log("Not match.... ", PareaInsens)
 				else
-					p
-					h3= project.Year
-					p
-					-year = project.Year
-			else
-				pf
-			+ppi(project, '10%', imgID, areaRoute)
-			p
+					- continue
+				- var imgID = idx.toString();
+				if project.Type == "patent"
+					- continue
+				if year != project.Year 
+					//if project.Year < 2014
+					if project.Year < 0
+						break
+					else
+						p
+						h3= project.Year
+						p
+						-year = project.Year
+				else
+					pf
+				+ppi(project, imgDim, imgID, areaRoute)
+				p
+		
 		
 		
 		

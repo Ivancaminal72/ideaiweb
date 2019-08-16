@@ -1,4 +1,4 @@
-mixin ppi(dat, imgDim, ppID, areaRoute)
+mixin ppiFilteredByArea(dat, imgDim, ppID)
 	div.grayLighter-background.align-left.inlineDiv
 		
 		- var imgUrl = "https://ideai.upc.edu/en/shared/pap/" + dat.Id + ".png"
@@ -39,12 +39,9 @@ mixin ppi(dat, imgDim, ppID, areaRoute)
 					|&emsp;
 					
 		div.divBottomPPI
-			- var areaUrl = "https://ideai.upc.edu/en/areas/"+areaRoute		
 			if (dat.EndYear - (new Date().getFullYear())) >= 0
 				img.imgBottomPPI(alt="Alive", height="25px", src="https://ideai.upc.edu/en/shared/pap/areas_icons/alive.png", title="Alive")
 			else
 				img.imgBottomPPI(alt="Finished", height="25px", src="https://ideai.upc.edu/en/shared/pap/areas_icons/finished.png", title="Finished")
-			a.external-link(href=areaUrl, target="_self")
-				img.imgBottomPPI(alt=areaRoute,height="25px", src="https://ideai.upc.edu/en/shared/pap/areas_icons/"+areaRoute+".png", title=areaRoute)
 			
 				
