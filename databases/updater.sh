@@ -4,7 +4,7 @@
 set -e
 
 #Go to the project path
-cd /home/ivan/github/ideaiweb
+cd /root/ideaiweb
 
 if test -f ./databases/data/form.csv; #existe y es un archivo regular
 then
@@ -26,8 +26,8 @@ fi
 
 #Parse and unify with old form inormation
 echo "Parsing and unifying with old data..."
-/home/ivan/anaconda3/bin/python3.7 ./databases/Projects.py > ~/Desktop/error_projects_ideai.log 2>&1
-if [ ! -s ~/Desktop/error_projects_ideai.log ]; then rm -f ~/Desktop/error_projects_ideai.log; fi
+./databases/projects.py > ./databases/last_projects_error.log 2>&1
+if [ ! -s ./databases/last_projects_error.log ]; then rm -f ./databases/last_projects_error.log; fi
 echo "OK!"
 
 #Upload new data to production server
