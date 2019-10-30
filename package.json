@@ -1,16 +1,21 @@
 {
-  "name": "ideai",
+  "name": "ideaiweb",
   "version": "1.0.0",
-  "description": "",
+  "description": "Visualization app for the ideai.upc.edu website",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Ivan Caminal",
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",
     "papaparse": "^4.6.2",
     "pug": "^2.0.4"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://www.github.com/ivancaminal72/ideaiweb"
   }
 }
