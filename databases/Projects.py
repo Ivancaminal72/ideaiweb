@@ -242,10 +242,10 @@ if __name__ == "__main__":
     # path_form = "C:/Users/Ivan/OneDrive/1-Work/2-ideai/databases/Projects_v2/form.csv"
     # path_out = "C:/Users/Ivan/OneDrive/1-Work/2-ideai/databases/Projects_v2/PAP_all.csv"
 
-    path_non_competitive = "./csv/non-competitive.bib"
-    path_competitive = "./csv/competitive.bib"
-    path_form = "./csv/form.csv"
-    path_out = "./csv/PAP_all_summary.csv"
+    path_non_competitive = "./databases/data/non-competitive.bib"
+    path_competitive = "./databases/data/competitive.bib"
+    path_form = "./databases/data/form.csv"
+    path_out = "./databases/data/PAP_all_summary.csv"
 
     data_nc = parse_bibtex(path_non_competitive, "non-competitive")
     data_c  = parse_bibtex(path_competitive, "competitive")
