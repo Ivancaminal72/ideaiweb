@@ -9,7 +9,7 @@
   "author": "Ivan Caminal",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.4",
+    "express": "^4.18.2",
     "papaparse": "^4.6.2",
     "pug": "^2.0.4"
   },
